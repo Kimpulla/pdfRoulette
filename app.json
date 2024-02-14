@@ -2,6 +2,7 @@
   "expo": {
     "name": "pdfRoulette",
     "slug": "pdfRoulette",
+    "scheme": "pdf-roulette",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +22,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kimpulla.pdfRoulette"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a1d22924-eecc-4bdb-ab5e-a0c25464f5da"
+      }
     }
   }
 }
