@@ -1,11 +1,17 @@
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { StatusBar, Dimensions, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, Pressable} from 'react-native';
 import Pdf from 'react-native-pdf';
 import React, {useState, useRef} from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
+import pickDocument from './index';
 
 const PdfRead = () => {
-    const source = { uri: "http://samples.leanpub.com/thereactnativebook-sample.pdf", cache: true }; // pdf source
+    //const source = { uri: "http://samples.leanpub.com/thereactnativebook-sample.pdf", cache: true }; // pdf source
+
+    const {uri} = useLocalSearchParams();
+    console.log("view: "+ uri);
+    
+    const source = {uri:uri?.toString(), cache:true};
 
     const [currentPage, setCurrentPage] = useState(1); //state of the page
     const [totalPages, setTotalPages] = useState(0);
