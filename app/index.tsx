@@ -1,22 +1,49 @@
 import { Link, router } from "expo-router";
-import React from 'react';
+import React,  { useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
+import * as DocumentPicker from "expo-document-picker";
+import PdfRead from "./view";
 
 export default function HomeScreen() {
+
+  const [uri, setUri] = useState('');
+
+  const pickDocument = async () => {
+
+    let result = await DocumentPicker.getDocumentAsync({});
+
+    if (result.assets && result.assets.length > 0) {
+      const uri = result.assets[0].uri;
+      setUri(uri);
+      sendData(uri); // Pass uri to sendData function
+    } else {
+        console.log("No assets found in the result.");
+    }
+  }
+ 
+  const sendData = (uri:string) => { // Accept uri as an argument
+    router.push({
+      pathname: "/view",
+      params: {
+        uri: uri,
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.background} />
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Start shuffling</Text>
-        <Pressable
-          onPress={() => router.push("/view")}
-          style={({ pressed }) => [
-            styles.button,
-            { opacity: pressed ? 0.6 : 1 } // Set opacity to 0.6 when pressed
-          ]}
-        >
-          <Text style={styles.buttonText}>Select PDF</Text>
-        </Pressable>
+          <Pressable
+            onPress={() => pickDocument()}
+            style={({ pressed }) => [
+              styles.button,
+              { opacity: pressed ? 0.6 : 1 } // Set opacity to 0.6 when pressed
+            ]}
+          >
+            <Text style={styles.buttonText}>Select PDF</Text>
+          </Pressable>
       </View>
     </View>
   );
