@@ -12,7 +12,7 @@ PDF Roulette is a straightforward application designed to provide a random page 
 1. **Select PDF**: Choose the PDF file you want to explore.
 2. **Click Shuffle**: Generate a random page and dive into your PDF adventure!
 
-### Setting Up the Project in Your Coding IDE
+## Setting Up the Project in Your Coding IDE
 
 To set up the project in your coding IDE, follow these steps:
 
