@@ -3,14 +3,12 @@ import { StatusBar, Dimensions, StyleSheet, Text, View, TouchableOpacity, Toucha
 import Pdf from 'react-native-pdf';
 import React, {useState, useRef} from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import pickDocument from './index';
 
 const PdfRead = () => {
-    //const source = { uri: "http://samples.leanpub.com/thereactnativebook-sample.pdf", cache: true }; // pdf source
+
 
     const {uri} = useLocalSearchParams();
     console.log("view: "+ uri);
-    
     const source = {uri:uri?.toString(), cache:true};
 
     const [currentPage, setCurrentPage] = useState(1); //state of the page
@@ -18,22 +16,23 @@ const PdfRead = () => {
     const pdfRef = useRef(null);
 
 
-    //when page changed do something
+    // When page changed set it to current page.
     const onPageChanged = (page: number) => {
         setCurrentPage(page);
     }
 
-    // open random apge
+    // Open random page.
     const openRandomPage = () => {
         const randomPage = Math.floor(Math.random() * totalPages) + 1;
         setCurrentPage(randomPage);
     }
 
+    // When pdf is loaded, get number of pages.
     const onPdfLoadComplete = (numberOfPages:number, filePath:string) => {
         setTotalPages(numberOfPages);
     }
 
-     // Prevent scrolling on the PDF component
+     // Prevent scrolling on the PDF component.
      const handlePdfTouch = () => {
         return false;
     }
@@ -50,7 +49,7 @@ const PdfRead = () => {
 
                 <Text style={styles.text}>PDF ROULETTE</Text>
             </View>
-
+        
        <TouchableWithoutFeedback onPress={handlePdfTouch}>
                 <View>
                     <Pdf
