@@ -1,4 +1,4 @@
-rootProject.name = 'pdfRoulette'
+rootProject.name = 'PDF Roulette'
 
 dependencyResolutionManagement {
   versionCatalogs {
