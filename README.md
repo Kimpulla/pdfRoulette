@@ -12,7 +12,7 @@ PDF Roulette is a straightforward application designed to provide a random page 
 1. **Select PDF**: Choose the PDF file you want to explore.
 2. **Click Shuffle**: Generate a random page and dive into your PDF adventure!
 
-## Setting Up the Project in Your Coding IDE
+## Setting up the project in your coding IDE
 
 To set up the project in your coding IDE, follow these steps:
 
@@ -21,11 +21,11 @@ To set up the project in your coding IDE, follow these steps:
    ```bash
    git clone https://github.com/Kimpulla/pdfRoulette.git
 
-3. **Open in Your IDE:**
+3. **Open in your IDE:**
    
 Open your preferred coding IDE (e.g., Visual Studio Code, Android Studio) and navigate to the directory where you cloned the repository.
 
-4. **Install Dependencies:**
+4. **Install dependencies:**
 Run the following commands in your terminal to install project dependencies:
 ```bash
 npm install
@@ -33,7 +33,7 @@ npm install
 yarn install
 ```
 
-5. **Build and Run:**
+5. **Build and run:**
    
    Build the project and run it on your local development environment. For more information about building, please refer to the [Expo documentation](https://docs.expo.dev/build/setup/).
 
