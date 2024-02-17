@@ -2,6 +2,8 @@
 
 PDF Roulette is a straightforward application designed to provide a random page from a PDF file, akin to drawing a random card in card games. Whether you're looking for a serendipitous read or just want to explore your PDFs in a new way, PDF Roulette offers a quick and easy solution.
 
+https://github.com/Kimpulla/pdfRoulette/assets/98890728/6d64a604-3c73-4c5e-ad40-5993ee4a6846
+
 ## Key Features
 
 - **Random Page Selection**: Instantly access a random page from your PDF library with just a single click.
