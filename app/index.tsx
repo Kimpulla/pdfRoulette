@@ -1,13 +1,55 @@
-import { Link, router } from "expo-router";
-import React,  { useState } from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { router } from "expo-router";
+import React,  { useState, useEffect } from 'react';
+import { StatusBar, StyleSheet, Text, View, Pressable } from 'react-native';
 import * as DocumentPicker from "expo-document-picker";
-import { showMessage, hideMessage } from "react-native-flash-message";
+import { showMessage } from "react-native-flash-message";
 import FlashMessage from "react-native-flash-message"; 
-
+import { Ionicons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
+import colors from './colors';
 export default function HomeScreen() {
 
+  const [isDarkMode, setIsDarkMode] = useState(true); // State to track dark mode
   const [uri, setUri] = useState('');
+
+  useEffect(() => {
+    // Load color mode from SecureStore when component mounts
+    loadColorMode();
+  }, []);
+
+  useEffect(() => {
+    // Update status bar color when color mode changes
+    StatusBar.setBackgroundColor(isDarkMode ? colors.dark.statusBarBackground : colors.light.statusBarBackground);
+    StatusBar.setBarStyle(isDarkMode ? 'light-content' : 'dark-content');
+
+    // Save color mode to SecureStore when color mode changes
+    saveColorMode();
+  }, [isDarkMode]);
+
+  const loadColorMode = async () => {
+    try {
+      const storedColorMode = await SecureStore.getItemAsync('colorMode');
+      if (storedColorMode !== null) {
+        setIsDarkMode(storedColorMode === 'dark');
+      }
+    } catch (error) {
+      console.error('Error loading color mode:', error);
+    }
+  };
+
+  const saveColorMode = async () => {
+    try {
+      await SecureStore.setItemAsync('colorMode', isDarkMode ? 'dark' : 'light');
+    } catch (error) {
+      console.error('Error saving color mode:', error);
+    }
+  };
+
+  // Function to toggle between dark and light mode
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
 
   /**
    * Creates error message, using react native flash message.
@@ -55,11 +97,20 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkMode ? colors.dark.backgroundColor : colors.light.backgroundColor }]}>
+      
+      <Pressable
+        style={styles.toggleButton}
+        onPress={toggleDarkMode}
+      >
+        <Ionicons name={isDarkMode ? 'sunny-outline' : 'moon-outline'} size={24} color={isDarkMode ? colors.dark.text : colors.light.text} />
+      </Pressable>
+
+
       <FlashMessage position="top" />
-      <View style={styles.background} />
+      <View/>
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>Start shuffling</Text>
+        <Text style={[styles.title, { color: isDarkMode ? colors.dark.text : colors.light.text }]}>Start shuffling</Text>
           <Pressable
             onPress={() => pickDocument()}
             style={({ pressed }) => [
@@ -70,6 +121,7 @@ export default function HomeScreen() {
             <Text style={styles.buttonText}>Select PDF</Text>
           </Pressable>
       </View>
+      
     </View>
   );
 }
@@ -79,16 +131,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#121212',
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#121212',
-    zIndex: -1,
   },
   contentContainer: {
     justifyContent: 'center',
@@ -99,10 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: '#fff',
-    textShadowColor: '#00f',
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
   },
   button: {
     backgroundColor: '#505050',
@@ -116,5 +155,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  toggleButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
 });
